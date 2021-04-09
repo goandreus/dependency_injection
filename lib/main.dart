@@ -1,6 +1,11 @@
+import 'package:dependency_injection/blocs/auth/auth_bloc.dart';
+import 'package:dependency_injection/dependency_register/register.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injector/injector.dart';
 
 void main() {
+  Register().regist;
   runApp(MyApp());
 }
 
@@ -13,7 +18,10 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: BlocProvider.value(
+        value: Injector.appInstance.get<AuthBloc>(),
+        child: MyHomePage(),
+      ),
     );
   }
 }
@@ -42,20 +50,11 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
+      body: Center(child: BlocBuilder<AuthBloc, AuthState>(
+        builder: (context, state) {
+          return Container();
+        },
+      )),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
